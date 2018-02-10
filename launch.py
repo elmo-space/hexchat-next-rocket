@@ -49,27 +49,6 @@ class launch(object):
       time = datetime.datetime.strftime(time_local, 'NET %d.%m.%Y')
       return time
 
-   def is_tbd(self, json_data):
-      tbd_status = json_data['tbdtime']
-      if tbd_status == 1:
-         return True
-      else:
-         return False
-
-   def is_go(self, json_data):
-      status = json_data['status']
-      if status == 1:
-         return True
-      else:
-         return False
-
-   def in_hold(self, json_data):
-      hold_state = json_data['inhold']
-      if hold_state == 1:
-         return True
-      else:
-         return False
-
    def get_status(self, json_data):
       tbd_stat = json_data['tbdtime']
       hold_stat = json_data['inhold']
@@ -87,6 +66,7 @@ class launch(object):
 
 class DeltaTemplate(Template):
     delimiter = "%"
+
 
 def strfdelta(tdelta, fmt):
     d = {"D": tdelta.days}
@@ -117,7 +97,6 @@ def next_launch(word, wordeol, userdata):
          timedelta = now - launch_time
          t_string = "+"
       deltastring = strfdelta(timedelta, "T"+t_string+"%D:%H:%M:%S")
-
    hexchat.command("say %sNext rocket: %s%s %s| %s%s %s| %sStatus: %s %s| %s%s" % (b, y, rocket, b, y, mission, b, y, status, b, y, deltastring))
 
 
